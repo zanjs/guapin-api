@@ -1,0 +1,13 @@
+app:
+  name: guapin
+  port: 8989
+
+db:
+  host:     127.0.0.1
+  name:     guapin
+  user:     root
+  password: root
+  port:     3306
+  driver:   mysql
+file:
+  path: upload
