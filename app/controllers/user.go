@@ -70,6 +70,52 @@ func (s UserController) Create(c *gin.Context) {
 	s.SuccessJSONData(c, user)
 }
 
+// Update is
+func (s UserController) Update(c *gin.Context) {
+	userLogin := &model.UserLogin{}
+
+	if err := c.BindJSON(userLogin); err != nil {
+		s.ErrorJSON(c, err.Error())
+		return
+	}
+
+	if userLogin.OldPassword == "" {
+		s.ErrorJSON(c, "密码不能为空")
+		return
+	}
+
+	if userLogin.OldPassword == userLogin.Password {
+		s.SuccessJSONUpdate(c)
+		return
+	}
+
+	useCla := c.MustGet("user").(*jwtauth.CustomClaims)
+
+	fmt.Println(useCla.Name)
+	fmt.Println(userLogin.Name)
+
+	if useCla.Name != userLogin.Name {
+		s.ErrorJSON(c, "非法操作")
+		return
+	}
+
+	u, err := s.User.GetByUsername(userLogin.Name)
+	if err != nil {
+		s.ErrorJSON(c, err.Error())
+		return
+	}
+	fmt.Println(u)
+
+	err = bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(userLogin.OldPassword))
+
+	if err != nil {
+		s.ErrorJSON(c, "原密码错误")
+		return
+	}
+
+	s.SuccessJSONUpdate(c)
+}
+
 // Login is
 func (s UserController) Login(c *gin.Context) {
 	user := &model.UserLogin{}

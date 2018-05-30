@@ -15,6 +15,7 @@ type User struct {
 
 // UserLogin is
 type UserLogin struct {
-	Name     string `json:"name"`
-	Password string `json:"password"` //密码
+	Name        string `json:"name"`
+	Password    string `json:"password"`     //密码
+	OldPassword string `json:"old_password"` //旧密码
 }

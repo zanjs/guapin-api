@@ -26,7 +26,7 @@ func JWTAuth() gin.HandlerFunc {
 			if err == TokenExpired {
 				if token, err = j.RefreshToken(token); err == nil {
 					c.Header("Authorization", "Bear "+token)
-					response.SuccessJSONData(c, token)
+					response.SuccessJSONToken(c, token)
 					c.Abort()
 
 					return

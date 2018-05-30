@@ -15,8 +15,9 @@ func User(g *gin.RouterGroup) {
 	user.Use(jwtauth.JWTAuth())
 	{
 		user.GET("", NewUserController.Home)
-		user.GET("/my", jwtauth.JWTAuth())
+		// user.GET("/my", jwtauth.JWTAuth())
 		user.POST("", NewUserController.Create)
+		user.PUT("", NewUserController.Update)
 	}
 
 	login := g.Group("/login")

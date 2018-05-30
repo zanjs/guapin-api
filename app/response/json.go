@@ -27,6 +27,14 @@ func SuccessJSONData(c *gin.Context, data interface{}) {
 	})
 }
 
+// SuccessJSONToken is ok
+func SuccessJSONToken(c *gin.Context, data interface{}) {
+	c.JSON(200, gin.H{
+		"success": true,
+		"token":   data,
+	})
+}
+
 // SuccessJSONUpdate is ok
 func SuccessJSONUpdate(c *gin.Context) {
 	SuccessJSONData(c, "更新成功")
