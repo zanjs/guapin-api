@@ -35,9 +35,20 @@ func (s UserController) Home(c *gin.Context) {
 
 // GetMe is
 func (s UserController) GetMe(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"va": "123",
-	})
+	useCla := c.MustGet("user").(*jwtauth.CustomClaims)
+
+	fmt.Println(useCla.Name)
+
+	u, err := s.User.GetByUsername(useCla.Name)
+	if err != nil {
+		s.ErrorJSON(c, err.Error())
+		return
+	}
+	fmt.Println(u)
+
+	u.AvatarURL = "http://chuangyiren.cn/images/tmp/works_20150810_7031/2015081015413512303.jpg"
+
+	s.SuccessJSONData(c, u)
 }
 
 // Create is
