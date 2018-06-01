@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"fmt"
+	"mugg/guapin/app/middleware"
 	"mugg/guapin/app/service"
 	"mugg/guapin/model"
 	// "github.com/appleboy/gin-jwt"
@@ -24,12 +25,24 @@ func NewArticle() *ArticleController {
 
 // Home is
 func (s ArticleController) Home(c *gin.Context) {
-	data, err := s.Article.GetAll()
+
+	qPage := middleware.GetPage(c)
+
+	fmt.Println("qPage\b")
+	fmt.Println(qPage)
+
+	// data, err := s.Article.GetAll()
+	data, err := s.Article.GetAllQuery(qPage)
 	if err != nil {
 		s.ErrorJSON(c, err.Error())
 		return
 	}
-	s.SuccessJSONData(c, data)
+	count, err := s.Article.GetAllQueryTotal()
+	if err != nil {
+		s.ErrorJSON(c, err.Error())
+		return
+	}
+	s.SuccessJSONDataPage(c, count, data)
 }
 
 // Create is
@@ -57,12 +70,19 @@ func (s ArticleController) Create(c *gin.Context) {
 		return
 	}
 
-	err = s.Article.Create(data)
+	cdata := &model.Article{}
+
+	cdata.Title = data.Title
+	cdata.Description = data.Description
+	cdata.CategoryID = data.CategoryID
+	cdata.Content = data.Content
+
+	err = s.Article.Create(cdata)
 	if err != nil {
 		s.ErrorJSON(c, err.Error())
 		return
 	}
-	s.SuccessJSONData(c, data)
+	s.SuccessJSONData(c, cdata)
 }
 
 // Update is

@@ -26,6 +26,11 @@ var Config = struct {
 		Path string `default:"upload/"`
 	}
 
+	WX struct {
+		AppID     string `required:"true"`
+		AppSecret string `required:"true"`
+	}
+
 	Contacts []struct {
 		Name  string
 		Email string `required:"true"`

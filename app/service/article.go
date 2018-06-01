@@ -16,16 +16,46 @@ func (s Article) GetAll() ([]model.Article, error) {
 		data []model.Article
 		err  error
 	)
-
 	tx := gorm.MysqlConn().Begin()
 	if err = tx.Find(&data).Error; err != nil {
 		tx.Rollback()
 		return data, err
 	}
 	tx.Commit()
-
 	return data, err
+}
 
+// GetAllQuery is
+func (s Article) GetAllQuery(q model.QueryParamsPage) ([]model.Article, error) {
+
+	var (
+		data []model.Article
+		err  error
+	)
+	tx := gorm.MysqlConn().Begin()
+	if err = tx.Order("id desc").Offset(q.Offset).Limit(q.Limit).Find(&data).Error; err != nil {
+		tx.Rollback()
+		return data, err
+	}
+	tx.Commit()
+	return data, err
+}
+
+// GetAllQueryTotal is
+func (s Article) GetAllQueryTotal() (int, error) {
+
+	var (
+		data  []model.Article
+		err   error
+		count int
+	)
+	tx := gorm.MysqlConn().Begin()
+	if err = tx.Model(&data).Count(&count).Error; err != nil {
+		tx.Rollback()
+		return count, err
+	}
+	tx.Commit()
+	return count, err
 }
 
 // Create is Article

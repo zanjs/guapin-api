@@ -24,12 +24,17 @@ func (b BaseController) SuccessJSONData(c *gin.Context, data interface{}) {
 	response.SuccessJSONData(c, data)
 }
 
+// SuccessJSONDataPage is
+func (b BaseController) SuccessJSONDataPage(c *gin.Context, total int, data interface{}) {
+	response.SuccessJSONDataPage(c, total, data)
+}
+
 // SuccessJSONUpdate is ok
 func (b BaseController) SuccessJSONUpdate(c *gin.Context) {
 	response.SuccessJSONUpdate(c)
 }
 
-// SuccessJSONUpdate is ok
+// SuccessJSONDelete is ok
 func (b BaseController) SuccessJSONDelete(c *gin.Context) {
 	response.SuccessJSONDelete(c)
 }

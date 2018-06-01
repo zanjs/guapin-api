@@ -11,3 +11,6 @@ db:
   driver:   mysql
 file:
   path: upload
+wx:
+  appid: wxa5b486c6b918ecfb
+  appsecret: e04004829d4c383b4db7769d88dfbca1

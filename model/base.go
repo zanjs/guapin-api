@@ -78,8 +78,6 @@ type (
 	}
 	// QueryParams is
 	QueryParams struct {
-		Offset     int    `json:"offset"`
-		Limit      int    `json:"limit"`
 		StartTime  string `json:"start_time"`
 		EndTime    string `json:"end_time"`
 		WareroomID int    `json:"wareroom_id"`
@@ -87,5 +85,11 @@ type (
 		ProductID  int    `json:"product_id"`
 		Count      int    `json:"count"`
 		Num        int    `json:"num"`
+	}
+	// QueryParamsPage is
+	QueryParamsPage struct {
+		Page   int `json:"page"`
+		Limit  int `json:"limit"`
+		Offset int `json:"offset"`
 	}
 )
