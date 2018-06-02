@@ -10,6 +10,7 @@ type Article struct {
 	TitleModel
 	CategoryIDModel
 	DescriptionModel
+	PictureModel
 	ContentModel
 	TimeAllModel
 }

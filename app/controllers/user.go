@@ -17,7 +17,8 @@ type (
 	// UserController is
 	UserController struct {
 		BaseController
-		User service.User
+		User     service.User
+		LoginLog service.UserLoginLog
 	}
 )
 
@@ -65,9 +66,9 @@ func (s UserController) Create(c *gin.Context) {
 		return
 	}
 
-	useCla := c.MustGet("user").(*jwtauth.CustomClaims)
+	// useCla := c.MustGet("user").(*jwtauth.CustomClaims)
 
-	fmt.Println(useCla.Name)
+	// fmt.Println(useCla.Name)
 
 	user := &model.User{}
 	user.Name = userLogin.Name
@@ -185,6 +186,20 @@ func (s UserController) Login(c *gin.Context) {
 	// 	s.ErrorJSON(c, err.Error())
 	// 	return
 	// }
+	ip := c.ClientIP()
+	userAgent := c.GetHeader("user-agent")
+	userLoginLog := &model.UserLoginLog{}
+
+	userLoginLog.IP = ip
+	userLoginLog.Name = u.Name
+	userLoginLog.UserID = u.ID
+	userLoginLog.UserAgent = userAgent
+
+	err = s.LoginLog.Create(userLoginLog)
+	if err != nil {
+		s.ErrorJSON(c, err.Error())
+		return
+	}
 
 	s.SuccessJSONData(c, token)
 }

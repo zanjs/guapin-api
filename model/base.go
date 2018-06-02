@@ -34,6 +34,14 @@ type (
 		DeletedAtModel
 	}
 
+	// IPModel is
+	IPModel struct {
+		IP string `json:"ip"`
+	}
+	// PictureModel is
+	PictureModel struct {
+		Picture string `json:"picture"`
+	}
 	// DescriptionModel is
 	DescriptionModel struct {
 		Description string `json:"description"`
