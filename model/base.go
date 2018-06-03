@@ -80,6 +80,22 @@ type (
 	SortModel struct {
 		Sort int `json:"sort"`
 	}
+	// TypeMdel is
+	TypeMdel struct {
+		Type string `json:"type"`
+	}
+	// ParentIDModel is
+	ParentIDModel struct {
+		ParentID int64 `json:"parent_id"`
+	}
+	// SizeModel is
+	SizeModel struct {
+		Size int64 `json:"size"`
+	}
+	// URLModel is
+	URLModel struct {
+		URL string `json:"url"`
+	}
 	// DisabledModel is
 	DisabledModel struct {
 		Disabled bool `json:"disabled" gorm:"default:'0'"`

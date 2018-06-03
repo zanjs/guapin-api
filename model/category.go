@@ -13,6 +13,7 @@ type (
 		DescriptionModel
 		SortModel
 		DisabledModel
+		TypeMdel
 		Article []*Article `json:"articles"`
 	}
 	// CategoryArticle is

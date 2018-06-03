@@ -79,6 +79,7 @@ func (s UserController) Create(c *gin.Context) {
 		s.ErrorJSON(c, err.Error())
 		return
 	}
+
 	s.SuccessJSONData(c, user)
 }
 
@@ -195,11 +196,25 @@ func (s UserController) Login(c *gin.Context) {
 	userLoginLog.UserID = u.ID
 	userLoginLog.UserAgent = userAgent
 
-	err = s.LoginLog.Create(userLoginLog)
-	if err != nil {
-		s.ErrorJSON(c, err.Error())
-		return
-	}
+	limiter := time.Tick(time.Millisecond * 2000)
+
+	go func() {
+		<-limiter
+		err = s.LoginLog.Create(userLoginLog)
+		if err != nil {
+			fmt.Println(err.Error())
+		}
+
+		sum := 0
+		for {
+			sum++
+			if sum > 100 {
+				break
+			}
+			<-limiter //执行到这里，需要隔 200毫秒才继续往下执行，time.Tick(timer)上面已定义
+			fmt.Println("request", sum, time.Now())
+		}
+	}()
 
 	s.SuccessJSONData(c, token)
 }
