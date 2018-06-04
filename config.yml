@@ -11,6 +11,7 @@ db:
   driver:   mysql
 file:
   path: upload
+  host: http://localhost:8989/
 wx:
   appid: wxa5b486c6b918ecfb
   appsecret: e04004829d4c383b4db7769d88dfbca1

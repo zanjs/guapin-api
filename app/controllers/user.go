@@ -205,15 +205,15 @@ func (s UserController) Login(c *gin.Context) {
 			fmt.Println(err.Error())
 		}
 
-		sum := 0
-		for {
-			sum++
-			if sum > 100 {
-				break
-			}
-			<-limiter //执行到这里，需要隔 200毫秒才继续往下执行，time.Tick(timer)上面已定义
-			fmt.Println("request", sum, time.Now())
-		}
+		// sum := 0
+		// for {
+		// 	sum++
+		// 	if sum > 100 {
+		// 		break
+		// 	}
+		// 	<-limiter //执行到这里，需要隔 200毫秒才继续往下执行，time.Tick(timer)上面已定义
+		// 	fmt.Println("request", sum, time.Now())
+		// }
 	}()
 
 	s.SuccessJSONData(c, token)

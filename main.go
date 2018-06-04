@@ -13,7 +13,8 @@ func main() {
 	r := gin.Default()
 	// r.Use(cors.Default())
 	r.Use(middleware.Options)
-
+	r.Use(gin.Logger())
+	r.Use(gin.Recovery())
 	config := conf.Config
 	r.LoadHTMLGlob("templates/**/*")
 	routes.Web(r)

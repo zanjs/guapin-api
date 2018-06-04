@@ -15,5 +15,6 @@ func Upload(g *gin.RouterGroup) {
 	{
 		Upload.POST("", NewUploadController.Create)
 		Upload.DELETE("", NewUploadController.Delete)
+		Upload.GET("/config", NewUploadController.ConfigInfo)
 	}
 }

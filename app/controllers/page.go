@@ -49,25 +49,32 @@ func (s PageController) Create(c *gin.Context) {
 
 // Update is
 func (s PageController) Update(c *gin.Context) {
-	category := &model.Page{}
+	data := &model.Page{}
 
-	if err := c.BindJSON(category); err != nil {
+	if err := c.BindJSON(data); err != nil {
 		s.ErrorJSON(c, err.Error())
 		return
 	}
 
-	if category.ID == 0 {
+	if data.ID == 0 {
 		s.ErrorJSON(c, "")
 		return
 	}
 
-	data, err := s.Page.Get(category.ID)
+	data2, err := s.Page.Get(data.ID)
 	if err != nil {
 		s.ErrorJSON(c, err.Error())
 		return
 	}
 
-	err = data.Update(category)
+	data2.Content = data.Content
+	data2.Title = data.Title
+	data2.Slug = data.Slug
+	data2.Description = data.Description
+	data2.Picture = data.Picture
+	data2.Slug = data.Slug
+
+	err = data2.Update()
 	if err != nil {
 		s.ErrorJSON(c, err.Error())
 		return

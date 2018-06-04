@@ -13,4 +13,6 @@ func Web(g *gin.Engine) {
 			"title": "hello zan!",
 		})
 	})
+
+	g.StaticFS("/upload", http.Dir("upload"))
 }

@@ -14,7 +14,7 @@ type (
 		SortModel
 		DisabledModel
 		TypeMdel
-		Article []*Article `json:"articles"`
+		Article []*Article `json:"articles,omitempty"`
 	}
 	// CategoryArticle is
 	CategoryArticle struct {

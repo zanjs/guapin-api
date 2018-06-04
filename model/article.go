@@ -13,6 +13,15 @@ type Article struct {
 	PictureModel
 	ContentModel
 	TimeAllModel
+	Category Category `json:"categories"`
+}
+
+// ArticleSeatch is
+type ArticleSeatch struct {
+	IDAutoModel
+	TitleModel
+	CategoryIDModel
+	DescriptionModel
 }
 
 // Update is Article

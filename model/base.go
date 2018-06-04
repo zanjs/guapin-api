@@ -25,7 +25,7 @@ type (
 	}
 	// DeletedAtModel is
 	DeletedAtModel struct {
-		DeletedAt *time.Time `json:"deleted_at" gorm:"column:deleted_at"`
+		DeletedAt *time.Time `json:"deleted_at,omitempty" gorm:"column:deleted_at"`
 	}
 	// TimeAllModel is
 	TimeAllModel struct {

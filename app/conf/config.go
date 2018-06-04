@@ -23,7 +23,8 @@ var Config = struct {
 	}
 
 	File struct {
-		Path string `default:"upload/"`
+		Path string `default:"upload/" json:"path"`
+		Host string `json:"host"`
 	}
 
 	WX struct {

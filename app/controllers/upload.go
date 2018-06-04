@@ -36,7 +36,14 @@ func (s UploadController) Create(c *gin.Context) {
 		return
 	}
 
-	s.SuccessJSONData(c, fileNameAll)
+	s.SuccessJSONData(c, conf.Config.File.Host+fileNameAll)
+}
+
+// ConfigInfo is
+func (s UploadController) ConfigInfo(c *gin.Context) {
+	fileInfo := conf.Config.File
+
+	s.SuccessJSONData(c, fileInfo)
 }
 
 // FileInfo is

@@ -14,6 +14,7 @@ func Article(g *gin.RouterGroup) {
 	// Article.Use(jwtauth.JWTAuth())
 	{
 		Article.GET("", NewArticleController.Home)
+		Article.GET("/:id", NewArticleController.Get)
 		Article.POST("", NewArticleController.Create)
 		Article.PUT("", NewArticleController.Update)
 		Article.DELETE("", NewArticleController.Delete)

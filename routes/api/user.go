@@ -2,6 +2,7 @@ package api
 
 import (
 	"mugg/guapin/app/controllers"
+	"mugg/guapin/app/middleware/jwtauth"
 
 	"github.com/gin-gonic/gin"
 )
@@ -11,7 +12,7 @@ func User(g *gin.RouterGroup) {
 	NewUserController := controllers.NewUser()
 	g.GET("/my", NewUserController.GetMe)
 	user := g.Group("/user")
-	// user.Use(jwtauth.JWTAuth())
+	user.Use(jwtauth.JWTAuth())
 	{
 		user.GET("", NewUserController.Home)
 		user.GET("/my", NewUserController.GetMe)

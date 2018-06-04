@@ -41,6 +41,22 @@ func (s Article) GetAllQuery(q model.QueryParamsPage) ([]model.Article, error) {
 	return data, err
 }
 
+// GetAllQuerySearch is
+func (s Article) GetAllQuerySearch(q model.QueryParamsPage, maps interface{}, likeTitle string) ([]model.Article, error) {
+
+	var (
+		data []model.Article
+		err  error
+	)
+	tx := gorm.MysqlConn().Begin()
+	if err = tx.Where(maps).Where("title LIKE ?", "%"+likeTitle+"%").Order("id desc").Offset(q.Offset).Limit(q.Limit).Find(&data).Error; err != nil {
+		tx.Rollback()
+		return data, err
+	}
+	tx.Commit()
+	return data, err
+}
+
 // GetAllQueryTotal is
 func (s Article) GetAllQueryTotal() (int, error) {
 
@@ -51,6 +67,23 @@ func (s Article) GetAllQueryTotal() (int, error) {
 	)
 	tx := gorm.MysqlConn().Begin()
 	if err = tx.Model(&data).Count(&count).Error; err != nil {
+		tx.Rollback()
+		return count, err
+	}
+	tx.Commit()
+	return count, err
+}
+
+// GetAllQuerySearchTotal is
+func (s Article) GetAllQuerySearchTotal(maps interface{}, likeTitle string) (int, error) {
+
+	var (
+		data  []model.Article
+		err   error
+		count int
+	)
+	tx := gorm.MysqlConn().Begin()
+	if err = tx.Model(&data).Where(maps).Where("title LIKE ?", "%"+likeTitle+"%").Count(&count).Error; err != nil {
 		tx.Rollback()
 		return count, err
 	}
@@ -79,9 +112,10 @@ func (s Article) Get(id uint64) (model.Article, error) {
 	var (
 		data model.Article
 		err  error
+		// category model.Category
 	)
 	tx := gorm.MysqlConn().Begin()
-	if err = tx.Last(&data, id).Error; err != nil {
+	if err = tx.Preload("Category").Last(&data, id).Error; err != nil {
 		tx.Rollback()
 		return data, err
 	}

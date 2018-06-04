@@ -12,12 +12,13 @@ type Page struct {
 	DescriptionModel
 	ContentModel
 	BodyModel
+	PictureModel
 	ImageModel
 	TimeAllModel
 }
 
 // Update is Page
-func (m *Page) Update(data *Page) error {
+func (m *Page) Update() error {
 	var (
 		err error
 	)
