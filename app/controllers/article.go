@@ -65,7 +65,7 @@ func (s ArticleController) Home(c *gin.Context) {
 		// fmt.Println(k, v)
 		if data[i].Picture != "" {
 			data[i].Picture = fileInfo.Host + data[i].Picture
-			data[i].Content = ""
+			// data[i].Content = ""
 		}
 	}
 

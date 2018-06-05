@@ -36,6 +36,10 @@ var Config = struct {
 		Name  string
 		Email string `required:"true"`
 	}
+
+	User struct {
+		Avatar string ``
+	}
 }{}
 
 func init() {

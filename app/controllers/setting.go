@@ -8,34 +8,34 @@ import (
 )
 
 type (
-	// CategoryController is
-	CategoryController struct {
+	// SettingController is
+	SettingController struct {
 		BaseController
-		Category service.Category
+		Setting service.Setting
 	}
 )
 
-// NewCategory is
-func NewCategory() *CategoryController {
-	return &CategoryController{}
+// NewSetting is
+func NewSetting() *SettingController {
+	return &SettingController{}
 }
 
 // Home is
-func (s CategoryController) Home(c *gin.Context) {
+func (s SettingController) Home(c *gin.Context) {
 	// qPage := middleware.GetPage(c)
 
-	// data, err := s.Category.GetAllQuery(qPage)
+	// data, err := s.Setting.GetAllQuery(qPage)
 	// if err != nil {
 	// 	s.ErrorJSON(c, err.Error())
 	// 	return
 	// }
-	// count, err := s.Category.GetAllQueryTotal()
+	// count, err := s.Setting.GetAllQueryTotal()
 	// if err != nil {
 	// 	s.ErrorJSON(c, err.Error())
 	// 	return
 	// }
 
-	data, err := s.Category.GetAll()
+	data, err := s.Setting.GetAll()
 	if err != nil {
 		s.ErrorJSON(c, err.Error())
 		return
@@ -45,43 +45,48 @@ func (s CategoryController) Home(c *gin.Context) {
 }
 
 // Create is
-func (s CategoryController) Create(c *gin.Context) {
-	Category := &model.Category{}
+func (s SettingController) Create(c *gin.Context) {
+	Setting := &model.Setting{}
 
-	if err := c.BindJSON(Category); err != nil {
+	if err := c.BindJSON(Setting); err != nil {
 		s.ErrorJSON(c, err.Error())
 		return
 	}
 
-	err := s.Category.Create(Category)
+	err := s.Setting.Create(Setting)
 	if err != nil {
 		s.ErrorJSON(c, err.Error())
 		return
 	}
-	s.SuccessJSONData(c, Category)
+	s.SuccessJSONData(c, Setting)
 }
 
 // Update is
-func (s CategoryController) Update(c *gin.Context) {
-	category := &model.Category{}
+func (s SettingController) Update(c *gin.Context) {
+	data := &model.Setting{}
 
-	if err := c.BindJSON(category); err != nil {
+	if err := c.BindJSON(data); err != nil {
 		s.ErrorJSON(c, err.Error())
 		return
 	}
 
-	if category.ID == 0 {
+	if data.ID == 0 {
 		s.ErrorJSON(c, "")
 		return
 	}
 
-	data, err := s.Category.Get(category.ID)
+	data2, err := s.Setting.Get(data.ID)
 	if err != nil {
 		s.ErrorJSON(c, err.Error())
 		return
 	}
 
-	err = data.Update(category)
+	data2.Key = data.Key
+	data2.Value = data.Value
+	data2.Name = data.Name
+	data2.Type = data.Type
+
+	err = data2.Update()
 	if err != nil {
 		s.ErrorJSON(c, err.Error())
 		return
@@ -90,26 +95,26 @@ func (s CategoryController) Update(c *gin.Context) {
 }
 
 // Delete is
-func (s CategoryController) Delete(c *gin.Context) {
-	category := &model.Category{}
+func (s SettingController) Delete(c *gin.Context) {
+	data := &model.Setting{}
 
-	if err := c.BindJSON(category); err != nil {
+	if err := c.BindJSON(data); err != nil {
 		s.ErrorJSON(c, err.Error())
 		return
 	}
 
-	if category.ID == 0 {
+	if data.ID == 0 {
 		s.ErrorJSON(c, "")
 		return
 	}
 
-	data, err := s.Category.Get(category.ID)
+	data2, err := s.Setting.Get(data.ID)
 	if err != nil {
 		s.ErrorJSON(c, err.Error())
 		return
 	}
 
-	err = data.Delete()
+	err = data2.Delete()
 	if err != nil {
 		s.ErrorJSON(c, err.Error())
 		return

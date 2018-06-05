@@ -31,5 +31,6 @@ func API(g *gin.Engine) {
 	api.Page(v1)
 	api.Upload(v1)
 	api.Article(v1)
-
+	api.Storage(v1)
+	api.Setting(v1)
 }

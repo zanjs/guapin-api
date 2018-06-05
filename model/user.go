@@ -1,5 +1,9 @@
 package model
 
+import (
+	"mugg/guapin/app/db"
+)
+
 // Roles is
 type Roles struct {
 	Roles string `json:"roles"`
@@ -9,11 +13,11 @@ type Roles struct {
 type User struct {
 	IDAutoModel
 	TimeAllModel
-	Name     string `gorm:"unique_index;default:null" json:"username"`
+	Name     string `gorm:"column:name;unique_index;default:null" json:"username"`
 	Password string `gorm:"default:null" json:"-"` //密码
 	// SecretKey string `gorm:"default:null" json:"secret_key"` //密钥
 	IsAdmin   bool    `json:"is_admin"`                //是否是管理员
-	AvatarURL string  `json:"avatar"`                  // 头像链接
+	Avatar    string  `json:"avatar"`                  // 头像链接
 	NickName  string  `json:"nick_name"`               // 昵称
 	LockState bool    `gorm:"default:'0'" json:"lock"` //锁定状态
 	Roles     []Roles `json:"roles"`
@@ -26,6 +30,17 @@ type UserLogin struct {
 	OldPassword string `json:"old_password"` //旧密码
 }
 
+// UserUpdate is
+type UserUpdate struct {
+	Name        string `gorm:"column:name" json:"username"`
+	Password    string `gorm:"default:null" json:"password"` //密码
+	IsAdmin     bool   `json:"is_admin"`                     //是否是管理员
+	Avatar      string `json:"avatar"`                       // 头像链接
+	NickName    string `json:"nick_name"`                    // 昵称
+	LockState   bool   `gorm:"default:'0'" json:"lock"`      //锁定状态
+	OldPassword string `json:"old_password"`                 //旧密码
+}
+
 // UserLoginLog is
 type UserLoginLog struct {
 	IDAutoModel
@@ -34,4 +49,19 @@ type UserLoginLog struct {
 	UserAgent string `json:"user_Agent"`
 	IPModel
 	CreateModel
+}
+
+// Update is User
+func (m *User) Update() error {
+	var (
+		err error
+	)
+	tx := gorm.MysqlConn().Begin()
+	if err = tx.Save(&m).Error; err != nil {
+		tx.Rollback()
+		return err
+	}
+	tx.Commit()
+
+	return err
 }

@@ -10,7 +10,9 @@ func CreateTable() error {
 		&Page{},
 		&Category{},
 		&Article{},
+		&Storage{},
 		&UserLoginLog{},
+		&Setting{},
 	)
 	return nil
 }

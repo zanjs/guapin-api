@@ -4,16 +4,21 @@ import (
 	"fmt"
 	"log"
 	"mugg/guapin/app/conf"
+	"mugg/guapin/app/service"
+	"mugg/guapin/model"
 	"mugg/guapin/utils"
 	"os"
 
 	"github.com/gin-gonic/gin"
+	"github.com/houndgo/suuid"
 )
 
 type (
 	// UploadController is
 	UploadController struct {
 		BaseController
+		StorageService service.Storage
+		StorageModel   model.Storage
 	}
 )
 
@@ -29,14 +34,27 @@ func (s UploadController) Create(c *gin.Context) {
 	file, _ := c.FormFile("file")
 	log.Println(file.Filename)
 
-	fileNameAll := utils.Upload(file.Filename)
+	fileStorage := utils.Storage{}.Upload(file.Filename)
 
-	if err := c.SaveUploadedFile(file, fileNameAll); err != nil {
+	if err := c.SaveUploadedFile(file, fileStorage.AllName); err != nil {
 		s.ErrorJSON(c, "upload file err:"+err.Error())
 		return
 	}
+	confFile := conf.Config.File
 
-	s.SuccessJSONData(c, conf.Config.File.Host+fileNameAll)
+	storage := &s.StorageModel
+	storage.Name = file.Filename
+	storage.Type = fileStorage.Type
+	storage.URL = utils.Substring(fileStorage.URL, len(confFile.Host), len(fileStorage.URL))
+	storage.UID = suuid.New().String()
+	go func() {
+		err := s.StorageService.Create(storage)
+		if err != nil {
+			fmt.Println("file storage create Error!" + err.Error())
+		}
+	}()
+
+	s.SuccessJSONData(c, fileStorage.URL)
 }
 
 // ConfigInfo is
@@ -49,21 +67,6 @@ func (s UploadController) ConfigInfo(c *gin.Context) {
 // FileInfo is
 type FileInfo struct {
 	Path string `json:"path"`
-}
-
-func substring(source string, start int, end int) string {
-	var r = []rune(source)
-	length := len(r)
-
-	if start < 0 || end > length || start > end {
-		return ""
-	}
-
-	if start == 0 && end == length {
-		return source
-	}
-
-	return string(r[start:end])
 }
 
 // Delete is
@@ -79,20 +82,15 @@ func (s UploadController) Delete(c *gin.Context) {
 		return
 	}
 
-	fileUpFix := conf.Config.File.Path
-
-	fmt.Println(len(fileUpFix))
-
-	xxLoad := substring(fileInfo.Path, 0, len(fileUpFix))
-
-	fmt.Println(xxLoad)
-
-	if xxLoad != fileUpFix {
-		s.ErrorJSON(c, "xxload error")
+	xxLoad, err := utils.FilePatFixRemove(fileInfo.Path, conf.Config.File.Path)
+	if err != nil {
+		s.ErrorJSON(c, "file remove Error!"+err.Error())
 		return
 	}
 
-	err := os.Remove(fileInfo.Path) //删除文件
+	fmt.Println(xxLoad)
+
+	err = os.Remove(fileInfo.Path) //删除文件
 	if err != nil {
 		//如果删除失败则输出 file remove Error!
 		s.ErrorJSON(c, "file remove Error!"+err.Error())

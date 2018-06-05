@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"errors"
 	"fmt"
 	"mugg/guapin/app/conf"
 	"path"
@@ -11,8 +12,17 @@ import (
 	"github.com/houndgo/suuid"
 )
 
+// Storage is
+type Storage struct {
+	Name       string
+	AllName    string
+	URL        string
+	FileSuffix string
+	Type       string
+}
+
 // Upload is
-func Upload(filename string) string {
+func (s Storage) Upload(filename string) Storage {
 
 	var filenameWithSuffix string
 	filenameWithSuffix = path.Base(filename)
@@ -32,8 +42,39 @@ func Upload(filename string) string {
 	if !checkBool {
 		ifile.Mkdir(todayPath)
 	}
-	sfileName := suuid.New().String() + fileSuffix
-	fileNameAll := todayPath + "/" + sfileName
+	s.Name = suuid.New().String() + fileSuffix
+	s.AllName = todayPath + "/" + s.Name
+	s.Type = fileSuffix
+	s.URL = conf.Config.File.Host + s.AllName
+	return s
+}
 
-	return fileNameAll
+// Substring is
+func Substring(source string, start int, end int) string {
+	var r = []rune(source)
+	length := len(r)
+
+	if start < 0 || end > length || start > end {
+		return ""
+	}
+
+	if start == 0 && end == length {
+		return source
+	}
+
+	return string(r[start:end])
+}
+
+// FilePatFixRemove is
+func FilePatFixRemove(path string, fileUpFix string) (string, error) {
+
+	fmt.Println(len(fileUpFix))
+
+	xxLoad := Substring(path, 0, len(fileUpFix))
+
+	if xxLoad != fileUpFix {
+		return xxLoad, errors.New("err")
+	}
+
+	return xxLoad, nil
 }

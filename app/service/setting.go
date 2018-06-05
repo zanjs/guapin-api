@@ -3,19 +3,18 @@ package service
 import (
 	"mugg/guapin/app/db"
 	"mugg/guapin/model"
-	"time"
 )
 
-// Category is
-type Category struct {
-	mo model.Category
+// Setting is
+type Setting struct {
+	mo model.Setting
 }
 
 // GetAll is
-func (s Category) GetAll() ([]model.Category, error) {
+func (s Setting) GetAll() ([]model.Setting, error) {
 
 	var (
-		data []model.Category
+		data []model.Setting
 		err  error
 	)
 
@@ -31,10 +30,10 @@ func (s Category) GetAll() ([]model.Category, error) {
 }
 
 // GetAllQuery is
-func (s Category) GetAllQuery(q model.QueryParamsPage) ([]model.Category, error) {
+func (s Setting) GetAllQuery(q model.QueryParamsPage) ([]model.Setting, error) {
 
 	var (
-		data []model.Category
+		data []model.Setting
 		err  error
 	)
 	tx := gorm.MysqlConn().Begin()
@@ -47,10 +46,10 @@ func (s Category) GetAllQuery(q model.QueryParamsPage) ([]model.Category, error)
 }
 
 // GetAllQueryTotal is
-func (s Category) GetAllQueryTotal() (int, error) {
+func (s Setting) GetAllQueryTotal() (int, error) {
 
 	var (
-		data  []model.Category
+		data  []model.Setting
 		err   error
 		count int
 	)
@@ -63,10 +62,10 @@ func (s Category) GetAllQueryTotal() (int, error) {
 	return count, err
 }
 
-// Get is Category
-func (s Category) Get(id uint64) (model.Category, error) {
+// Get is Setting
+func (s Setting) Get(id uint64) (model.Setting, error) {
 	var (
-		data model.Category
+		data model.Setting
 		err  error
 	)
 	tx := gorm.MysqlConn().Begin()
@@ -79,12 +78,11 @@ func (s Category) Get(id uint64) (model.Category, error) {
 	return data, err
 }
 
-// Create is Category
-func (s Category) Create(m *model.Category) error {
+// Create is Setting
+func (s Setting) Create(m *model.Setting) error {
 	var (
 		err error
 	)
-	m.CreatedAt = time.Now()
 	tx := gorm.MysqlConn().Begin()
 	if err = tx.Create(&m).Error; err != nil {
 		tx.Rollback()

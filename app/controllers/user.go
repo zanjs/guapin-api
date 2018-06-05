@@ -2,9 +2,11 @@ package controllers
 
 import (
 	"fmt"
+	"mugg/guapin/app/conf"
 	"mugg/guapin/app/middleware/jwtauth"
 	"mugg/guapin/app/service"
 	"mugg/guapin/model"
+	"mugg/guapin/utils"
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
@@ -29,9 +31,15 @@ func NewUser() *UserController {
 
 // Home is
 func (s UserController) Home(c *gin.Context) {
-	users, _ := s.User.GetAll()
+	data, _ := s.User.GetAll()
 
-	s.SuccessJSONData(c, users)
+	for i := range data {
+		if data[i].Avatar == "" {
+			data[i].Avatar = conf.Config.User.Avatar
+		}
+	}
+
+	s.SuccessJSONData(c, data)
 }
 
 // GetMe is
@@ -47,8 +55,7 @@ func (s UserController) GetMe(c *gin.Context) {
 	}
 	fmt.Println(u)
 
-	u.AvatarURL = "http://chuangyiren.cn/images/tmp/works_20150810_7031/2015081015413512303.jpg"
-
+	u.Avatar = conf.Config.User.Avatar
 	s.SuccessJSONData(c, u)
 }
 
@@ -73,6 +80,7 @@ func (s UserController) Create(c *gin.Context) {
 	user := &model.User{}
 	user.Name = userLogin.Name
 	user.Password = userLogin.Password
+	user.Avatar = conf.Config.User.Avatar
 
 	err := s.User.Create(user)
 	if err != nil {
@@ -85,45 +93,44 @@ func (s UserController) Create(c *gin.Context) {
 
 // Update is
 func (s UserController) Update(c *gin.Context) {
-	userLogin := &model.UserLogin{}
+	data := &model.UserUpdate{}
 
-	if err := c.BindJSON(userLogin); err != nil {
+	if err := c.BindJSON(data); err != nil {
 		s.ErrorJSON(c, err.Error())
 		return
 	}
 
-	if userLogin.OldPassword == "" {
-		s.ErrorJSON(c, "密码不能为空")
-		return
-	}
-
-	if userLogin.OldPassword == userLogin.Password {
-		s.SuccessJSONUpdate(c)
-		return
-	}
+	// if userLogin.OldPassword == userLogin.Password {
+	// 	s.SuccessJSONUpdate(c)
+	// 	return
+	// }
 
 	useCla := c.MustGet("user").(*jwtauth.CustomClaims)
 
 	fmt.Println(useCla.Name)
-	fmt.Println(userLogin.Name)
+	fmt.Println(data.Name)
 
-	if useCla.Name != userLogin.Name {
-		s.ErrorJSON(c, "非法操作")
-		return
-	}
+	// if useCla.Name != userLogin.Name {
+	// 	s.ErrorJSON(c, "非法操作")
+	// 	return
+	// }
 
-	u, err := s.User.GetByUsername(userLogin.Name)
+	u, err := s.User.GetByUsername(data.Name)
 	if err != nil {
 		s.ErrorJSON(c, err.Error())
 		return
 	}
 	fmt.Println(u)
 
-	err = bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(userLogin.OldPassword))
+	// err = bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(userLogin.OldPassword))
 
-	if err != nil {
-		s.ErrorJSON(c, "原密码错误")
-		return
+	// if err != nil {
+	// 	s.ErrorJSON(c, "原密码错误")
+	// 	return
+	// }
+	if data.Password != "" {
+		u.Password = utils.HashPassword(data.Password)
+		u.Update()
 	}
 
 	s.SuccessJSONUpdate(c)
