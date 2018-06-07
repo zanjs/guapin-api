@@ -1,0 +1,16 @@
+{
+  "name": "guapin-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "gox -os=\"linux\"",
+    "build64": "gox -osarch=\"linux/amd64\"",
+    "windows64": "gox -osarch=\"windows/amd64\"",
+    "windows32": "gox -osarch=\"windows/386\"",
+    "html": "go-bindata-assetfs html/...",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "JuLian",
+  "license": "ISC"
+}
