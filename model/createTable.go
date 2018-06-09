@@ -11,7 +11,7 @@ func CreateTable() error {
 		&Category{},
 		&Article{},
 		&Storage{},
-		&UserLoginLog{},
+		&LoginLog{},
 		&Setting{},
 	)
 	return nil

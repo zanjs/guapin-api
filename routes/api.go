@@ -33,4 +33,6 @@ func API(g *gin.Engine) {
 	api.Article(v1)
 	api.Storage(v1)
 	api.Setting(v1)
+	api.Logs(v1)
+	api.LoginLog(v1)
 }

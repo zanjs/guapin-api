@@ -41,16 +41,6 @@ type UserUpdate struct {
 	OldPassword string `json:"old_password"`                 //旧密码
 }
 
-// UserLoginLog is
-type UserLoginLog struct {
-	IDAutoModel
-	Name      string `json:"username"`
-	UserID    uint64 `json:"user_id"`
-	UserAgent string `json:"user_Agent"`
-	IPModel
-	CreateModel
-}
-
 // Update is User
 func (m *User) Update() error {
 	var (
