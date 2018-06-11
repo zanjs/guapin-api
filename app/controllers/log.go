@@ -32,6 +32,8 @@ func (s LogsController) Create(c *gin.Context) {
 		return
 	}
 
+	Logs.IP = c.ClientIP()
+
 	if Logs.AppID == "" || Logs.Content == "" {
 		s.ErrorJSON(c, "err.Error()")
 		return
@@ -51,6 +53,7 @@ func (s LogsController) Create(c *gin.Context) {
 
 		var buffer bytes.Buffer
 		buffer.WriteString("time: " + dayTimeStr)
+		buffer.WriteString(" ip: " + Logs.IP)
 		buffer.WriteString(" content: " + Logs.Content)
 
 		f, err := os.OpenFile(dayFile, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0766)

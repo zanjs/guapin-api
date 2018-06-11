@@ -23,7 +23,7 @@ var Config = struct {
 	}
 
 	File struct {
-		Path string `default:"upload/" json:"path"`
+		Path string `default:"upload" json:"path"`
 		Host string `json:"host"`
 	}
 
