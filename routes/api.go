@@ -35,4 +35,5 @@ func API(g *gin.Engine) {
 	api.Setting(v1)
 	api.Logs(v1)
 	api.LoginLog(v1)
+	api.Excel(v1)
 }
