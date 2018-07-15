@@ -76,9 +76,21 @@ type (
 	ImageModel struct {
 		Image string `json:"image"`
 	}
+	// StatusModel is
+	StatusModel struct {
+		Status int `json:"status"`
+	}
+	// StatuStrModel is
+	StatuStrModel struct {
+		StatuStr string `json:"status_str"`
+	}
 	// SortModel is
 	SortModel struct {
 		Sort int `json:"sort"`
+	}
+	// MarkModel is
+	MarkModel struct {
+		Mark string `json:"mark"`
 	}
 	// TypeMdel is
 	TypeMdel struct {
@@ -96,9 +108,21 @@ type (
 	URLModel struct {
 		URL string `json:"url"`
 	}
+	// LinkModel is
+	LinkModel struct {
+		Link string `json:"link"`
+	}
 	// DisabledModel is
 	DisabledModel struct {
 		Disabled bool `json:"disabled" gorm:"default:'0'"`
+	}
+	// BusinessIDModel is 业务编号
+	BusinessIDModel struct {
+		BusinessID int `json:"business_id"`
+	}
+	// TypeMKModel is 类型标记
+	TypeMKModel struct {
+		TypeMK string `json:"type"`
 	}
 	// QueryParams is
 	QueryParams struct {
