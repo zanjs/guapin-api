@@ -36,4 +36,9 @@ func API(g *gin.Engine) {
 	api.Logs(v1)
 	api.LoginLog(v1)
 	api.Excel(v1)
+
+	// banner
+	api.Banner(v1)
+	api.BannerCategory(v1)
+
 }

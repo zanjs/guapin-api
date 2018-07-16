@@ -9,7 +9,7 @@ type Storage struct {
 	IDAutoModel
 	UUIDModel
 	NameModel
-	TypeMdel
+	TypeModel
 	URLModel
 	UserID int64 `json:"user_id"`
 	TimeAllModel

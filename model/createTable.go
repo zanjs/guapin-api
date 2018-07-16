@@ -13,6 +13,8 @@ func CreateTable() error {
 		&Storage{},
 		&LoginLog{},
 		&Setting{},
+		&BannerCategory{},
+		&Banner{},
 	)
 	return nil
 }

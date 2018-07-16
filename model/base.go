@@ -92,8 +92,8 @@ type (
 	MarkModel struct {
 		Mark string `json:"mark"`
 	}
-	// TypeMdel is
-	TypeMdel struct {
+	// TypeModel is
+	TypeModel struct {
 		Type string `json:"type"`
 	}
 	// ParentIDModel is

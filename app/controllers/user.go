@@ -55,6 +55,10 @@ func (s UserController) Home(c *gin.Context) {
 
 // GetMe is
 func (s UserController) GetMe(c *gin.Context) {
+	fmt.Println("\n")
+	fmt.Println("进来啦")
+	fmt.Println("\n")
+
 	useCla := c.MustGet("user").(*jwtauth.CustomClaims)
 
 	fmt.Println(useCla.Name)

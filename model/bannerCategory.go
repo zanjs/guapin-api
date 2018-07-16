@@ -5,8 +5,8 @@ import (
 )
 
 type (
-	// Category is
-	Category struct {
+	// BannerCategory is
+	BannerCategory struct {
 		IDAutoModel
 		TimeAllModel
 		Name string `json:"name" gorm:"type:varchar(100);unique"`
@@ -14,23 +14,20 @@ type (
 		SortModel
 		DisabledModel
 		TypeModel
-		Article []*Article `json:"articles,omitempty"`
-	}
-	// CategoryArticle is
-	CategoryArticle struct {
-		CategoryID string `json:"category_id"`
-		ArticleID  string `json:"article_id"`
+		Banner []*Banner `json:"banners,omitempty"`
 	}
 )
 
 // Update is Category
-func (m *Category) Update(data *Category) error {
+func (m *BannerCategory) Update(data *BannerCategory) error {
 	var (
 		err error
 	)
 	m.Name = data.Name
 	m.Description = data.Description
 	m.Disabled = data.Disabled
+	m.Type = data.Type
+	m.Sort = data.Sort
 	tx := gorm.MysqlConn().Begin()
 	if err = tx.Save(&m).Error; err != nil {
 		tx.Rollback()
@@ -42,7 +39,7 @@ func (m *Category) Update(data *Category) error {
 }
 
 // Delete is
-func (m *Category) Delete() error {
+func (m *BannerCategory) Delete() error {
 	var err error
 	tx := gorm.MysqlConn().Begin()
 	if err = tx.Delete(&m).Error; err != nil {

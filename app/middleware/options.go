@@ -15,9 +15,12 @@ func Options(c *gin.Context) {
 	c.Header("Allow", "*")
 	c.Header("Content-Type", "charset=utf-8, application/json")
 	if c.Request.Method != "OPTIONS" {
-		fmt.Println("OPTIONS")
+		fmt.Println(c.Request.RequestURI)
+		fmt.Println("!===OPTIONS")
 		c.Next()
 	} else {
+		fmt.Println(c.Request.RequestURI)
+		fmt.Println("=OPTIONS")
 		c.AbortWithStatus(http.StatusOK)
 		c.Abort()
 	}

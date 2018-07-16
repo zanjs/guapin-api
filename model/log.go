@@ -9,6 +9,6 @@ type (
 		Name  string `json:"name" gorm:"type:varchar(100);unique"`
 		ContentModel
 		IPModel
-		TypeMdel
+		TypeModel
 	}
 )
