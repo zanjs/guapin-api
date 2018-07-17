@@ -12,6 +12,8 @@ type Storage struct {
 	TypeModel
 	URLModel
 	UserID int64 `json:"user_id"`
+	SizeModel
+	SizeStrModel
 	TimeAllModel
 }
 

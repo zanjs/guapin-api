@@ -19,6 +19,7 @@ type Storage struct {
 	URL        string
 	FileSuffix string
 	Type       string
+	Path       string
 }
 
 // Upload is
@@ -45,6 +46,7 @@ func (s Storage) Upload(filename string) Storage {
 	s.Name = suuid.New().String() + fileSuffix
 	s.AllName = todayPath + "/" + s.Name
 	s.Type = fileSuffix
+	s.Path = s.AllName
 	s.URL = conf.Config.File.Host + s.AllName
 	return s
 }

@@ -82,6 +82,10 @@ func (s ArticleController) Get(c *gin.Context) {
 		return
 	}
 
+	fileInfo := conf.Config.File
+
+	data.Picture = fileInfo.Host + data.Picture
+
 	s.SuccessJSONData(c, data)
 }
 

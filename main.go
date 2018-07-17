@@ -16,9 +16,9 @@ func main() {
 	r.Static("/upload", "./upload")
 	f, _ := os.Create("g.log")
 	gin.DefaultWriter = io.MultiWriter(f)
+	r.Use(middleware.Options)
 	r.Use(cors.Default())
 	// r.LoadHTMLGlob("templates/**/*")
-	r.Use(middleware.Options)
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
 	config := conf.Config

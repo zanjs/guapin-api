@@ -11,6 +11,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/houndgo/suuid"
+	"github.com/inhies/go-bytesize"
 )
 
 type (
@@ -21,6 +22,16 @@ type (
 		StorageModel   model.Storage
 	}
 )
+
+//Size is 获取文件大小的接口
+type Size interface {
+	Size() int64
+}
+
+//Stat is 获取文件信息的接口
+type Stat interface {
+	Stat() (os.FileInfo, error)
+}
 
 // NewUpload is
 func NewUpload() *UploadController {
@@ -48,7 +59,27 @@ func (s UploadController) Create(c *gin.Context) {
 	storage.URL = utils.Substring(fileStorage.URL, len(confFile.Host), len(fileStorage.URL))
 	storage.UID = suuid.New().String()
 	go func() {
-		err := s.StorageService.Create(storage)
+
+		fmt.Println("fileStorage.URL")
+		fmt.Println(fileStorage.Path)
+
+		file2, err := os.Open(fileStorage.Path)
+		if err != nil { // Do Something
+		}
+		fInfo, err := file2.Stat()
+		if err != nil { // Do Something
+		}
+		fmt.Println(fInfo.Size())
+
+		// filesize, _ := strconv.ParseFloat(fInfo.Size(), 10, 64)
+		filesize := float64(fInfo.Size())
+
+		b := bytesize.New(filesize)
+		fmt.Printf("%s", b)
+		storage.Size = fInfo.Size()
+		storage.SizeStr = b.String()
+
+		err = s.StorageService.Create(storage)
 		if err != nil {
 			fmt.Println("file storage create Error!" + err.Error())
 		}

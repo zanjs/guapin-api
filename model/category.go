@@ -31,6 +31,7 @@ func (m *Category) Update(data *Category) error {
 	m.Name = data.Name
 	m.Description = data.Description
 	m.Disabled = data.Disabled
+	m.Sort = data.Sort
 	tx := gorm.MysqlConn().Begin()
 	if err = tx.Save(&m).Error; err != nil {
 		tx.Rollback()

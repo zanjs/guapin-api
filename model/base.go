@@ -104,6 +104,10 @@ type (
 	SizeModel struct {
 		Size int64 `json:"size"`
 	}
+	// SizeStrModel is
+	SizeStrModel struct {
+		SizeStr string `json:"size_str"`
+	}
 	// URLModel is
 	URLModel struct {
 		URL string `json:"url"`
