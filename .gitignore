@@ -15,3 +15,5 @@ guapin
 *.log
 debug
 *_linux_*
+.idea
+.vscode
