@@ -63,8 +63,15 @@ func (s BannerController) Home(c *gin.Context) {
 	fmt.Println(fileInfo)
 	for i := range data {
 		// fmt.Println(k, v)
+
 		if data[i].Picture != "" {
-			data[i].Picture = fileInfo.Host + data[i].Picture
+
+			picture := data[i].Picture
+			picture4 := picture[0:4]
+			fmt.Println(picture4)
+			if picture4 != "http" {
+				data[i].Picture = fileInfo.Host + data[i].Picture
+			}
 			// data[i].Content = ""
 		}
 	}
@@ -134,7 +141,7 @@ func (s BannerController) Update(c *gin.Context) {
 	}
 
 	if data.CategoryID == 0 {
-		s.ErrorJSON(c, "栏目不能为空")
+		s.ErrorJSON(c, "类别不能为空")
 		return
 	}
 
@@ -145,7 +152,7 @@ func (s BannerController) Update(c *gin.Context) {
 
 	category, err := s.Category.Get(categoryID)
 	if category.Name == "" {
-		s.ErrorJSON(c, "没有找到栏目")
+		s.ErrorJSON(c, "没有找到类别")
 		return
 	}
 
@@ -156,6 +163,7 @@ func (s BannerController) Update(c *gin.Context) {
 	data2.Description = data.Description
 	data2.CategoryID = data.CategoryID
 	data2.Picture = data.Picture
+	data2.Sort = data.Sort
 	data2.Update(&data2)
 	if err != nil {
 		s.ErrorJSON(c, err.Error())

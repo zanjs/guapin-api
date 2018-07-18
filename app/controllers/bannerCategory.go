@@ -22,11 +22,21 @@ func NewBannerCategory() *BannerCategoryController {
 
 // Home is
 func (s BannerCategoryController) Home(c *gin.Context) {
-	data, err := s.BannerCategory.GetAll()
+
+	disabled := c.DefaultQuery("disabled", "")
+
+	maps := make(map[string]interface{})
+	// categoryID := searchData.CategoryID
+	if disabled != "" {
+		maps["disabled"] = disabled
+	}
+
+	data, err := s.BannerCategory.GetAllQuerySearch(maps)
 	if err != nil {
 		s.ErrorJSON(c, err.Error())
 		return
 	}
+
 	// s.SuccessJSONDataPage(c, count, data)
 	s.SuccessJSONData(c, data)
 }

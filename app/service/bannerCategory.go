@@ -30,6 +30,22 @@ func (s BannerCategory) GetAll() ([]model.BannerCategory, error) {
 
 }
 
+// GetAllQuerySearch is
+func (s BannerCategory) GetAllQuerySearch(maps interface{}) ([]model.BannerCategory, error) {
+
+	var (
+		data []model.BannerCategory
+		err  error
+	)
+	tx := gorm.MysqlConn().Begin()
+	if err = tx.Where(maps).Order("sort desc,id desc").Find(&data).Error; err != nil {
+		tx.Rollback()
+		return data, err
+	}
+	tx.Commit()
+	return data, err
+}
+
 // GetAllQuery is
 func (s BannerCategory) GetAllQuery(q model.QueryParamsPage) ([]model.BannerCategory, error) {
 
