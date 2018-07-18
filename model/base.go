@@ -122,7 +122,7 @@ type (
 	}
 	// BusinessIDModel is 业务编号
 	BusinessIDModel struct {
-		BusinessID int `json:"business_id"`
+		BusinessID string `json:"business_id"`
 	}
 	// TypeMKModel is 类型标记
 	TypeMKModel struct {

@@ -160,6 +160,7 @@ func (s BannerController) Update(c *gin.Context) {
 
 	data2, err := s.Banner.GetID(data.ID)
 	data2.Name = data.Name
+	data2.BusinessID = data.BusinessID
 	data2.Description = data.Description
 	data2.CategoryID = data.CategoryID
 	data2.Picture = data.Picture
