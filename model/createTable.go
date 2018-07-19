@@ -15,6 +15,7 @@ func CreateTable() error {
 		&Setting{},
 		&BannerCategory{},
 		&Banner{},
+		&GoodsCategory{},
 	)
 	return nil
 }
