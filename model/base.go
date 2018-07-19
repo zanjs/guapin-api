@@ -7,6 +7,14 @@ type (
 	IDAutoModel struct {
 		ID uint64 `json:"id" sql:"AUTO_INCREMENT" gorm:"unique_index;not null;unique;primary_key;column:id"`
 	}
+	// PIDAutoModel is
+	PIDAutoModel struct {
+		PID uint64 `json:"pid"`
+	}
+	// LevelModel is
+	LevelModel struct {
+		Level uint64 `json:"level"`
+	}
 	// IDModel is
 	IDModel struct {
 		ID string `json:"id" sql:"index"  gorm:"unique_index;not null;unique;primary_key;column:id"`
