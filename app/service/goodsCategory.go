@@ -25,7 +25,6 @@ func (s GoodsCategory) GetAll() ([]model.GoodsCategory, error) {
 		return data, err
 	}
 	tx.Commit()
-
 	return data, err
 
 }

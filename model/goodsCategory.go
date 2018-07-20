@@ -16,6 +16,7 @@ type (
 		DescriptionModel
 		SortModel
 		DisabledModel
+		List []*GoodsCategory `json:"list,omitempty"`
 	}
 )
 
