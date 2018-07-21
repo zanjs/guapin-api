@@ -11,6 +11,14 @@ type (
 	PIDAutoModel struct {
 		PID uint64 `json:"pid"`
 	}
+	// GoodsIDModel is
+	GoodsIDModel struct {
+		GoodsID uint64 `json:"goods_id"`
+	}
+	// RecommendModel is
+	RecommendModel struct {
+		RecommendStatus int `json:"recommend_status"`
+	}
 	// LevelModel is
 	LevelModel struct {
 		Level uint64 `json:"level"`

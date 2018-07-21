@@ -42,6 +42,7 @@ func API(g *gin.Engine) {
 	api.BannerCategory(v1)
 
 	// goods
+	api.Goods(v1)
 	api.GoodsCategory(v1)
 
 }
