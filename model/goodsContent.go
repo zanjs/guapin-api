@@ -15,11 +15,10 @@ type (
 )
 
 // Update is Category
-func (m *GoodsContent) Update(data *GoodsContent) error {
+func (m *GoodsContent) Update() error {
 	var (
 		err error
 	)
-	m.Content = data.Content
 	tx := gorm.MysqlConn().Begin()
 	if err = tx.Save(&m).Error; err != nil {
 		tx.Rollback()

@@ -15,8 +15,9 @@ type Goods struct {
 	StatusModel           // 商品状态
 	PingTuan         bool `json:"pintuan"` // 拼团开启
 	PictureModel
-	Pictures      []GoodsPicture `json:"pictures"`      // 商品图片
-	Content       GoodsContent   `json:"content"`       // 商品详细介绍内容
+	Pictures      []GoodsPicture `json:"pictures"` // 商品图片
+	Content       GoodsContent   `json:"content"`  // 商品详细介绍内容
+	Body          string         `json:"body"`
 	OriginalPrice float64        `json:"origina_price"` // 原价
 	MinPrice      float64        `json:"min_price"`     // 现价
 	PinTuanPrice  float64        `json:"pintuan_price"` // 拼团价
@@ -24,7 +25,7 @@ type Goods struct {
 	MinScore      uint64         `json:"min_score"`     // 积分
 	Weight        float64        `json:"weight"`        // 重量
 	TimeAllModel
-	Category GoodsCategory `json:"categories"`
+	Category GoodsCategory `json:"category"`
 }
 
 // GoodsSeatch is

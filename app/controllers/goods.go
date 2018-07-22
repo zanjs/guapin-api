@@ -14,8 +14,9 @@ type (
 	// GoodsController is
 	GoodsController struct {
 		BaseController
-		Goods    service.Goods
-		Category service.GoodsCategory
+		Goods        service.Goods
+		Category     service.GoodsCategory
+		GoodsContent service.GoodsContent
 	}
 )
 
@@ -154,11 +155,39 @@ func (s GoodsController) Update(c *gin.Context) {
 	data2.PingTuan = data.PingTuan
 	data2.Weight = data.Weight
 	data2.Picture = data.Picture
+	data2.Content = data.Content
 	data2.Update(&data2)
 	if err != nil {
 		s.ErrorJSON(c, err.Error())
 		return
 	}
+
+	fmt.Println("\n")
+	fmt.Println(data2.Content)
+	fmt.Println("\n")
+
+	content := data2.Content
+
+	content.GoodsID = data2.ID
+	content.Content = data2.Content.Content
+	fmt.Println(content)
+	content2, _ := s.GoodsContent.GetByGoodsID(content.GoodsID)
+
+	if content2.ID == 0 {
+		err := s.GoodsContent.Create(&content)
+		if err != nil {
+			s.ErrorJSON(c, err.Error())
+			return
+		}
+	} else {
+		content2.Content = content.Content
+		err = content2.Update()
+		if err != nil {
+			s.ErrorJSON(c, err.Error())
+			return
+		}
+	}
+
 	s.SuccessJSONUpdate(c)
 }
 

@@ -6,16 +6,16 @@ import (
 	"time"
 )
 
-// GoodsCategory is
-type GoodsCategory struct {
-	mo model.GoodsCategory
+// GoodsContent is
+type GoodsContent struct {
+	mo model.GoodsContent
 }
 
 // GetAll is
-func (s GoodsCategory) GetAll() ([]model.GoodsCategory, error) {
+func (s GoodsContent) GetAll() ([]model.GoodsContent, error) {
 
 	var (
-		data []model.GoodsCategory
+		data []model.GoodsContent
 		err  error
 	)
 
@@ -30,10 +30,10 @@ func (s GoodsCategory) GetAll() ([]model.GoodsCategory, error) {
 }
 
 // GetAllQuerySearch is
-func (s GoodsCategory) GetAllQuerySearch(maps interface{}) ([]model.GoodsCategory, error) {
+func (s GoodsContent) GetAllQuerySearch(maps interface{}) ([]model.GoodsContent, error) {
 
 	var (
-		data []model.GoodsCategory
+		data []model.GoodsContent
 		err  error
 	)
 	tx := gorm.MysqlConn().Begin()
@@ -46,10 +46,10 @@ func (s GoodsCategory) GetAllQuerySearch(maps interface{}) ([]model.GoodsCategor
 }
 
 // GetAllQuery is
-func (s GoodsCategory) GetAllQuery(q model.QueryParamsPage) ([]model.GoodsCategory, error) {
+func (s GoodsContent) GetAllQuery(q model.QueryParamsPage) ([]model.GoodsContent, error) {
 
 	var (
-		data []model.GoodsCategory
+		data []model.GoodsContent
 		err  error
 	)
 	tx := gorm.MysqlConn().Begin()
@@ -62,10 +62,10 @@ func (s GoodsCategory) GetAllQuery(q model.QueryParamsPage) ([]model.GoodsCatego
 }
 
 // GetAllQueryTotal is
-func (s GoodsCategory) GetAllQueryTotal() (int, error) {
+func (s GoodsContent) GetAllQueryTotal() (int, error) {
 
 	var (
-		data  []model.GoodsCategory
+		data  []model.GoodsContent
 		err   error
 		count int
 	)
@@ -78,10 +78,10 @@ func (s GoodsCategory) GetAllQueryTotal() (int, error) {
 	return count, err
 }
 
-// GetByID is GoodsCategory
-func (s GoodsCategory) GetByID(id uint64) (model.GoodsCategory, error) {
+// Get is GoodsContent
+func (s GoodsContent) Get(id uint64) (model.GoodsContent, error) {
 	var (
-		data model.GoodsCategory
+		data model.GoodsContent
 		err  error
 	)
 	tx := gorm.MysqlConn().Begin()
@@ -94,10 +94,10 @@ func (s GoodsCategory) GetByID(id uint64) (model.GoodsCategory, error) {
 	return data, err
 }
 
-// Get is GoodsCategory
-func (s GoodsCategory) Get(id uint64) (model.GoodsCategory, error) {
+// GetByID is GoodsContent
+func (s GoodsContent) GetByID(id uint64) (model.GoodsContent, error) {
 	var (
-		data model.GoodsCategory
+		data model.GoodsContent
 		err  error
 	)
 	tx := gorm.MysqlConn().Begin()
@@ -110,8 +110,24 @@ func (s GoodsCategory) Get(id uint64) (model.GoodsCategory, error) {
 	return data, err
 }
 
-// Create is GoodsCategory
-func (s GoodsCategory) Create(m *model.GoodsCategory) error {
+// GetByGoodsID is GoodsContent
+func (s GoodsContent) GetByGoodsID(id uint64) (model.GoodsContent, error) {
+	var (
+		data model.GoodsContent
+		err  error
+	)
+	tx := gorm.MysqlConn().Begin()
+	if err = tx.Where("goods_id = ?", id).First(&data).Error; err != nil {
+		tx.Rollback()
+		return data, err
+	}
+	tx.Commit()
+
+	return data, err
+}
+
+// Create is GoodsContent
+func (s GoodsContent) Create(m *model.GoodsContent) error {
 	var (
 		err error
 	)
