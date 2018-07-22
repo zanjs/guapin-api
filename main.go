@@ -5,6 +5,7 @@ import (
 	"mugg/guapin/app/conf"
 	"mugg/guapin/app/middleware"
 	"mugg/guapin/routes"
+	"mugg/guapin/utils"
 	"os"
 
 	"github.com/gin-contrib/cors"
@@ -12,6 +13,7 @@ import (
 )
 
 func main() {
+
 	r := gin.Default()
 	r.Static("/upload", "./upload")
 	f, _ := os.Create("g.log")
@@ -25,5 +27,8 @@ func main() {
 	routes.Web(r)
 	routes.API(r)
 
+	utils.GeneratorID()
+
 	r.Run(":" + config.APP.Port)
+
 }
