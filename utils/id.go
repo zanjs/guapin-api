@@ -86,8 +86,8 @@ func MakeYearDaysRand(sum int) string {
 	return strs
 }
 
-// show_substr is
-func show_substr(s string, l int) string {
+// showSubstr is
+func showSubstr(s string, l int) string {
 	if len(s) <= l {
 		return s
 	}
