@@ -11,13 +11,25 @@ type (
 	PIDAutoModel struct {
 		PID uint64 `json:"pid"`
 	}
-	// GoodsIDModel is
-	GoodsIDModel struct {
-		GoodsID uint64 `json:"goods_id"`
-	}
-	// RecommendModel is
+	// RecommendModel is 推荐状态
 	RecommendModel struct {
 		RecommendStatus int `json:"recommend_status"`
+	}
+	// RemarkModel is 备注
+	RemarkModel struct {
+		Remark string `json:"remark"`
+	}
+	// IsExistsModel is 是否有效
+	IsExistsModel struct {
+		IsExists bool `json:"is_exists" gorm:"default:1"`
+	}
+	// IsDefaultModel is 是否默认
+	IsDefaultModel struct {
+		IsDefault bool `json:"is_default"`
+	}
+	// NumberModel is 数量
+	NumberModel struct {
+		Number uint `json:"number"`
 	}
 	// LevelModel is
 	LevelModel struct {
@@ -30,6 +42,10 @@ type (
 	// UUIDModel is
 	UUIDModel struct {
 		UID string `json:"uid" sql:"index"  gorm:"unique_index;not null;unique;primary_key;column:uid"`
+	}
+	// UserIDModel 用户ID
+	UserIDModel struct {
+		UserID uint64 `json:"user_id"`
 	}
 	// CreateModel is
 	CreateModel struct {
@@ -54,7 +70,7 @@ type (
 	IPModel struct {
 		IP string `json:"ip"`
 	}
-	// PictureModel is
+	// PictureModel is 图片
 	PictureModel struct {
 		Picture string `json:"picture"`
 	}

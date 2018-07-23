@@ -9,7 +9,7 @@ type LoginLog struct {
 	IDAutoModel
 	Name      string `json:"username"`
 	UserID    uint64 `json:"user_id"`
-	UserAgent string `json:"user_Agent"`
+	UserAgent string `json:"user_agent"`
 	IPModel
 	CreateModel
 }

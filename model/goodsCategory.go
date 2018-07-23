@@ -20,7 +20,7 @@ type (
 	}
 )
 
-// Update is Category
+// Update is
 func (m *GoodsCategory) Update(data *GoodsCategory) error {
 	var (
 		err error
