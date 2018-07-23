@@ -4,18 +4,18 @@ import (
 	"mugg/guapin/app/db"
 )
 
-// LoginLog is
-type LoginLog struct {
+// AdminLoginLog is
+type AdminLoginLog struct {
 	IDAutoModel
 	Name string `json:"username"`
-	UserIDModel
-	UserAgent string `json:"user_agent"`
+	AdminUserIDModel
+	AdminUserAgent string `json:"user_agent"`
 	IPModel
 	CreateModel
 }
 
-// Update is LoginLog
-func (m *LoginLog) Update() error {
+// Update is AdminLoginLog
+func (m *AdminLoginLog) Update() error {
 	var (
 		err error
 	)
@@ -30,7 +30,7 @@ func (m *LoginLog) Update() error {
 }
 
 // Delete is
-func (m *LoginLog) Delete() error {
+func (m *AdminLoginLog) Delete() error {
 	var err error
 	tx := gorm.MysqlConn().Begin()
 	if err = tx.Delete(&m).Error; err != nil {

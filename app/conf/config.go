@@ -40,6 +40,9 @@ var Config = struct {
 	User struct {
 		Avatar string ``
 	}
+	AdminUser struct {
+		Avatar string ``
+	}
 }{}
 
 func init() {

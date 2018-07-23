@@ -25,7 +25,7 @@ func API(g *gin.Engine) {
 		// })
 	}
 
-	api.User(v1)
+	api.AdminUser(v1)
 	api.Table(v1)
 	api.Category(v1)
 	api.Page(v1)

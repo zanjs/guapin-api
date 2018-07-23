@@ -4,8 +4,13 @@ import (
 	"mugg/guapin/app/db"
 )
 
-//User is table users `gorm:"column:category_id" json:"category_id" form:"category_id"`
-type User struct {
+// Roles is
+type Roles struct {
+	Roles string `json:"roles"`
+}
+
+//AdminUser is table users `gorm:"column:category_id" json:"category_id" form:"category_id"`
+type AdminUser struct {
 	IDAutoModel
 	TimeAllModel
 	Name     string `gorm:"column:name;unique_index;default:null" json:"username"`
@@ -18,15 +23,15 @@ type User struct {
 	Roles     []Roles `json:"roles"`
 }
 
-// UserLogin is
-type UserLogin struct {
+// AdminUserLogin is
+type AdminUserLogin struct {
 	Name        string `json:"username"`
 	Password    string `json:"password"`     //密码
 	OldPassword string `json:"old_password"` //旧密码
 }
 
-// UserUpdate is
-type UserUpdate struct {
+// AdminUserUpdate is
+type AdminUserUpdate struct {
 	Name        string `gorm:"column:name" json:"username"`
 	Password    string `gorm:"default:null" json:"password"` //密码
 	IsAdmin     bool   `json:"is_admin"`                     //是否是管理员
@@ -36,8 +41,8 @@ type UserUpdate struct {
 	OldPassword string `json:"old_password"`                 //旧密码
 }
 
-// Update is User
-func (m *User) Update() error {
+// Update is AdminUser
+func (m *AdminUser) Update() error {
 	var (
 		err error
 	)

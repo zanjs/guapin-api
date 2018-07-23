@@ -47,6 +47,9 @@ type (
 	UserIDModel struct {
 		UserID uint64 `json:"user_id"`
 	}
+	AdminUserIDModel struct {
+		AdminUserID uint64 `json:"admin_user_id"`
+	}
 	// CreateModel is
 	CreateModel struct {
 		CreatedAt time.Time `json:"created_at" gorm:"column:created_at" sql:"DEFAULT:current_timestamp"`
