@@ -24,7 +24,7 @@ func GeneratorID() string {
 	o := rand.New(rand.NewSource(time.Now().UnixNano())).Int63()
 	s := strconv.FormatInt(o, 10)
 	fmt.Println(store)
-	fmt.Println(show_substr(s, 2))
+	fmt.Println(s)
 	fmt.Println(o)
 	numStr := timeStr + store
 	fmt.Println(numStr)
